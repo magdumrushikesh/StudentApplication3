@@ -1,0 +1,36 @@
+﻿@model List<StudentApplication3.Models.Student>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>DOB</th>
+            <th>Gender</th>
+            <th>Hobbies</th>
+            <th>Cdac_center</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var students in Model) 
+        {
+        <tr>
+            <td>@students.Name</td>
+            <td>@students.Age</td>
+            <td>@students.Email</td>
+            <td>@students.DOB</td>
+            <td>@students.Gender</td>
+            <td>@students.Hobbies</td>
+            <td>@students.CDAC_Center</td>
+        </tr>    
+        }
+        
+        
+    </tbody>
+</table>
