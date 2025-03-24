@@ -1,0 +1,49 @@
+﻿@model StudentApplication3.Models.Student
+
+@{
+    ViewBag.Title = "Student Details";
+}
+
+<h2>Confirm Delete Details</h2>
+
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Age:</strong> @Model.Age</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Date of Birth:</strong> @Model.DOB.ToString()</p>
+<p><strong>Gender:</strong> @Model.Gender</p>
+<p><strong>Hobbies:</strong> @Model.Hobbies</p>
+<p><strong>CDAC Center:</strong> @Model.CDAC_Center</p>
+
+<button id="deleteBtn" data-id="@Model.Id">Confirm Delete</button>
+<br />
+<a href="@Url.Action("Index", "Student")">Back to List</a>
+
+<!-- jQuery for AJAX Call -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#deleteBtn').click(function () {
+            var studentId = $(this).data('id');
+
+            if (confirm('Are you sure you want to delete this student?')) {
+                $.ajax({
+                    url: '@Url.Action("DeleteConfirmed", "Student")',
+                    type: 'POST',
+                    data: { id: studentId },
+                    success: function (response) {
+                        if (response.success) {
+                            alert(response.message);
+                            window.location.href = '@Url.Action("Index", "Student")';
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error: ' + xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -4,6 +4,7 @@
 }
 
 <h2>Index</h2>
+<a href="@Url.Action("Create", "Student")">Add New Student</a>
 <table>
     <thead>
         <tr>
@@ -14,23 +15,79 @@
             <th>Gender</th>
             <th>Hobbies</th>
             <th>Cdac_center</th>
+            <th>Actions</th>
         </tr>
-
     </thead>
     <tbody>
-        @foreach (var students in Model) 
+        @foreach (var students in Model)
         {
-        <tr>
-            <td>@students.Name</td>
-            <td>@students.Age</td>
-            <td>@students.Email</td>
-            <td>@students.DOB</td>
-            <td>@students.Gender</td>
-            <td>@students.Hobbies</td>
-            <td>@students.CDAC_Center</td>
-        </tr>    
+            <tr>
+                <td>
+                    <!-- Click to call controller action -->
+                    <a href="javascript:void(0);" onclick="showStudentDetails('@students.Id')">@students.Name</a>
+                </td>
+                <td>@students.Age</td>
+                <td>@students.Email</td>
+                <td>@students.DOB</td>
+                <td>@students.Gender</td>
+                <td>@students.Hobbies</td>
+                <td>@students.CDAC_Center</td>
+                <td><button onclick="showEdit('@students.Id')">Edit </button></td>
+                <td><button onclick="showDelete('@students.Id')">Delete </button></td>
+            </tr>
+
         }
-        
-        
     </tbody>
 </table>
+
+<script>
+    function showEdit(studentId) {
+        window.location.href = `/Student/Edit/${studentId}`;
+    }
+    function showDelete(studentId) {
+        window.location.href = `/Student/Delete/${studentId}`;
+    }
+    function showStudentDetails(studentId) {
+        window.location.href = `/Student/Details/${studentId}`;
+    }
+</script>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        margin: 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>

@@ -1,0 +1,17 @@
+﻿@model StudentApplication3.Models.Student
+
+@{
+    ViewBag.Title = "Student Details";
+}
+
+<h2>Student Details</h2>
+
+<p><strong>Name:</strong> @Model.Name</p>
+<p><strong>Age:</strong> @Model.Age</p>
+<p><strong>Email:</strong> @Model.Email</p>
+<p><strong>Date of Birth:</strong> @Model.DOB.ToString()</p>
+<p><strong>Gender:</strong> @Model.Gender</p>
+<p><strong>Hobbies:</strong> @Model.Hobbies</p>
+<p><strong>CDAC Center:</strong> @Model.CDAC_Center</p>
+
+<a href="@Url.Action("Index", "Student")">Back to List</a>
