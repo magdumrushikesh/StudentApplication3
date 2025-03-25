@@ -14,10 +14,11 @@ namespace StudentApplication3.Controllers
         // GET: Student/Create
         public ActionResult Create()
         {
-            var list = db.centers.ToList();
-            ViewBag.list = new SelectList(list, "Id", "Name"); // Correctly populate the SelectList
+            var list = db.centers.Select(c => new { c.Id, c.Name }).ToList(); // Use Name for both value and display
+            ViewBag.list = new SelectList(list, "Name", "Name");
             return View();
         }
+
 
 
         // POST: Student/Create using AJAX
@@ -72,6 +73,9 @@ namespace StudentApplication3.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
+            var list = db.centers.Select(c => new { c.Id, c.Name }).ToList();
+            ViewBag.list = new SelectList(list, "Id", "Name");
+
             var student = db.Students.FirstOrDefault(s => s.Id == id);
             if (student == null)
             {
@@ -79,6 +83,7 @@ namespace StudentApplication3.Controllers
             }
             return View(student);
         }
+
 
         [HttpPost]
         public JsonResult Edit(Student student)

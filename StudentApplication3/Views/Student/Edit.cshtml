@@ -77,10 +77,10 @@
                                                                                                                     @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
                                                                                                                 </div>
 
-                                                                                                                                <div class="form-group">
-                                                                                                                                    @Html.LabelFor(model => model.CDAC_Center)
-                                                                                                                                    @Html.TextBoxFor(model => model.CDAC_Center, new { @class = "form-control" })
-                                                                                                                                    @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
+                                                                                                                                <div class="form-group col-sm-6">
+                                                                                                                                    @Html.LabelFor(model => model.center_id, "CDAC Center")
+                                                                                                                                    @Html.DropDownListFor(model => model.center_id, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
+                                                                                                                                    @Html.ValidationMessageFor(model => model.center_id, "", new { @class = "text-danger" })
                                                                                                                                 </div>
 
                                                                                                                                                 <button class="btn btn-primary" type="submit">Confirm Edit</button>
