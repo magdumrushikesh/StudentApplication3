@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using StudentApplication3.Models;
@@ -7,13 +8,17 @@ namespace StudentApplication3.Controllers
 {
     public class StudentController : Controller
     {
-        private StudentDBEntities db = new StudentDBEntities();
+        private StudentDBEntities3 db = new StudentDBEntities3();
+
 
         // GET: Student/Create
         public ActionResult Create()
         {
+            var list = db.centers.ToList();
+            ViewBag.list = new SelectList(list, "Id", "Name"); // Correctly populate the SelectList
             return View();
         }
+
 
         // POST: Student/Create using AJAX
         [HttpPost]
@@ -49,6 +54,7 @@ namespace StudentApplication3.Controllers
         public ActionResult Index()
         {
             var details = db.Students.ToList();
+           
             return View(details);
         }
 

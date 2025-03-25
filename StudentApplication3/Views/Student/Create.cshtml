@@ -4,6 +4,17 @@
     ViewBag.Title = "Create Student";
 }
 
+<script>
+
+    function validate() {
+        if (document.getElementById("txtName").value.length < 3) {
+            alert("Name should be greater than 3 character");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 <h2>Create Student</h2>
 
 @using (Html.BeginForm("Create", "Student", FormMethod.Post, new { id = "studentForm" }))
@@ -14,13 +25,13 @@
 
             <div class="form-group col-sm-6">
                 @Html.LabelFor(model => model.Name)
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control",id="txtName" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
 
             <div class="form-group col-sm-6">
                 @Html.LabelFor(model => model.Email)
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control",id="txtEmail" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
 
@@ -55,18 +66,19 @@
             <div class="form-group col-sm-6">
                 @Html.LabelFor(model => model.Hobbies)
                 @Html.TextAreaFor(model => model.Hobbies, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger", id="txtHobbies" })
             </div>
 
-            <div class="form-group col-sm-6">
-                @Html.LabelFor(model => model.CDAC_Center)
-                @Html.TextBoxFor(model => model.CDAC_Center, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
-            </div>
+<div class="form-group col-sm-6">
+    @Html.LabelFor(model => model.center_id)
+    @Html.DropDownListFor(model => model.center_id, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.center_id, "", new { @class = "text-danger", id = "txtCenter" })
+</div>
+
 
         </div>  
             <div class="text-center mt-3 ">
-                <button class="btn btn-primary" type="submit">Create</button>
+                <button class="btn btn-primary" type="submit" onclick="return validate()">Create</button>
                 <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
             </div>
        

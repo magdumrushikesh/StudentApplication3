@@ -12,18 +12,18 @@ namespace StudentApplication3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Student
+    public partial class center
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public center()
+        {
+            this.Students = new HashSet<Student>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Age { get; set; }
-        public string Email { get; set; }
-        public Nullable<System.DateTime> DOB { get; set; }
-        public string Gender { get; set; }
-        public string Hobbies { get; set; }
-        public string CDAC_Center { get; set; }
-        public Nullable<int> center_id { get; set; }
     
-        public virtual center center { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
     }
 }
