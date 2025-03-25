@@ -11,19 +11,38 @@ namespace StudentApplication3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Student
     {
         public int Id { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
+        [StringLength(100, ErrorMessage = "Name cannot be longer than 100 characters.")]
         public string Name { get; set; }
+
+        [Range(1, 150, ErrorMessage = "Age must be between 1 and 150.")]
         public Nullable<int> Age { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Date of Birth is required.")]
+        [DataType(DataType.Date, ErrorMessage = "Invalid date format.")]
         public Nullable<System.DateTime> DOB { get; set; }
+
+        [Required(ErrorMessage = "Gender is required.")]
         public string Gender { get; set; }
+
+        [StringLength(200, ErrorMessage = "Hobbies cannot be longer than 200 characters.")]
         public string Hobbies { get; set; }
+
+        
         public string CDAC_Center { get; set; }
+
         public Nullable<int> center_id { get; set; }
-    
+
         public virtual center center { get; set; }
     }
 }

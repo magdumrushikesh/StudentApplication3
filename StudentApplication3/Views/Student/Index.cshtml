@@ -3,102 +3,88 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Student Management</h2>
 <a href="@Url.Action("Create", "Student")">Add New Student</a>
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Email</th>
-            <th>DOB</th>
-            <th>Gender</th>
-            <th>Hobbies</th>
-            <th>Cdac_center</th>
-            <th>Actions</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var students in Model)
-        {
-            <tr>
-                <td>
-                    <!-- Click to call controller action -->
-                    <a href="javascript:void(0);" onclick="showStudentDetails('@students.Id')">@students.Name</a>
-                </td>
-                <td>@students.Age</td>
-                <td>@students.Email</td>
-                <td>@students.DOB</td>
-                <td>@students.Gender</td>
-                <td>@students.Hobbies</td>
-                <td>@students.CDAC_Center</td>
-                <td><button onclick="showEdit('@students.Id')">Edit </button></td>
-                <td><button class="deleteButton" onclick="showDelete('@students.Id')">Delete </button></td>
-            </tr>
 
+<table id="studentGrid"></table>
+<div id="pager"></div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/jquery.jqgrid.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.15.5/css/ui.jqgrid.min.css" />
+
+    <script>
+        $(document).ready(function () {
+           var studentData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.JsonSerializerSettings
+{
+    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+}));
+
+
+
+            $("#studentGrid").jqGrid({
+                datatype: 'local',
+                data: studentData,
+                colNames: ['Name', 'Age', 'Email', 'DOB', 'Gender', 'Hobbies', 'CDAC Center', 'Actions'],
+                colModel: [
+                    { name: 'Name', index: 'Name', width: 150 },
+                    { name: 'Age', index: 'Age', width: 80 },
+                    { name: 'Email', index: 'Email', width: 180 },
+                    { name: 'DOB', index: 'DOB', width: 120 },
+                    { name: 'Gender', index: 'Gender', width: 80 },
+                    { name: 'Hobbies', index: 'Hobbies', width: 200 },
+                    { name: 'CDAC_Center', index: 'CDAC_Center', width: 150 },
+                    {
+                        name: 'Actions',
+                        index: 'Actions',
+                        width: 200,
+                        formatter: function (cellvalue, options, rowObject) {
+                            return `<button onclick="showEdit('${rowObject.Id}')">Edit</button>
+                                    <button class='deleteButton' onclick="showDelete('${rowObject.Id}')">Delete</button>`;
+                        }
+                    }
+                ],
+                viewrecords: true,
+                width: 1000,
+                height: 300,
+                rowNum: 10,
+                pager: '#pager',
+                caption: 'Student Management'
+            });
+        });
+
+        function showEdit(studentId) {
+            window.location.href = `/Student/Edit/${studentId}`;
         }
-    </tbody>
-</table>
+        function showDelete(studentId) {
+            window.location.href = `/Student/Delete/${studentId}`;
+        }
+    </script>
 
-<script>
-    function showEdit(studentId) {
-        window.location.href = `/Student/Edit/${studentId}`;
-    }
-    function showDelete(studentId) {
-        window.location.href = `/Student/Delete/${studentId}`;
-    }
-    function showStudentDetails(studentId) {
-        window.location.href = `/Student/Details/${studentId}`;
-    }
-</script>
-
-<style>
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        border: 1px solid #ccc;
-        padding: 8px;
-        text-align: center;
-    }
-
-    th {
-        background-color: #f4f4f4;
-    }
-
-    a {
-        color: #007bff;
-        text-decoration: none;
-    }
-
-        a:hover {
-            text-decoration: underline;
+    <style>
+        .deleteButton {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 4px;
         }
 
-    .deleteButton {
-        background-color: red'';
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        margin: 2px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-    button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 6px 12px;
-        margin: 2px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
-
-        button:hover {
-            background-color: #0056b3;
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            margin: 2px;
+            cursor: pointer;
+            border-radius: 4px;
         }
-</style>
+
+            button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+}

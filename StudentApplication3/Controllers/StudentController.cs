@@ -69,14 +69,49 @@ namespace StudentApplication3.Controllers
             return View(student);
         }
 
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             var student = db.Students.FirstOrDefault(s => s.Id == id);
             if (student == null)
             {
-                return NotFound();
+                return HttpNotFound();
             }
-            return View("Create",student);
+            return View(student);
+        }
+
+        [HttpPost]
+        public JsonResult Edit(Student student)
+        {
+            if (student == null)
+            {
+                return Json(new { success = false, message = "Invalid student data." });
+            }
+
+            var existingStudent = db.Students.FirstOrDefault(s => s.Id == student.Id);
+            if (existingStudent == null)
+            {
+                return Json(new { success = false, message = "Student not found." });
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Update student details
+                existingStudent.Name = student.Name;
+                existingStudent.Email = student.Email;
+                existingStudent.DOB = student.DOB;
+                existingStudent.Age = student.Age;
+                existingStudent.Gender = student.Gender;
+                existingStudent.Hobbies = student.Hobbies;
+                existingStudent.CDAC_Center = student.CDAC_Center;
+
+                db.SaveChanges();
+                return Json(new { success = true, message = "Student updated successfully!" });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Validation failed. Please check your input." });
+            }
         }
 
         public ActionResult Delete(int id)
