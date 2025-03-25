@@ -16,6 +16,7 @@
             <th>Hobbies</th>
             <th>Cdac_center</th>
             <th>Actions</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +34,7 @@
                 <td>@students.Hobbies</td>
                 <td>@students.CDAC_Center</td>
                 <td><button onclick="showEdit('@students.Id')">Edit </button></td>
-                <td><button onclick="showDelete('@students.Id')">Delete </button></td>
+                <td><button class="deleteButton" onclick="showDelete('@students.Id')">Delete </button></td>
             </tr>
 
         }
@@ -76,6 +77,16 @@
         a:hover {
             text-decoration: underline;
         }
+
+    .deleteButton {
+        background-color: red'';
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        margin: 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
 
     button {
         background-color: #007bff;

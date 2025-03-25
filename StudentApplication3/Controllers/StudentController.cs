@@ -70,7 +70,7 @@ namespace StudentApplication3.Controllers
             {
                 return NotFound();
             }
-            return View(student);
+            return View("Create",student);
         }
 
         public ActionResult Delete(int id)
