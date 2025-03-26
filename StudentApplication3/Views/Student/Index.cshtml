@@ -4,10 +4,12 @@
 }
 
 <h2>Student Management</h2>
-<a href="@Url.Action("Create", "Student")">Add New Student</a>
+<a href="@Url.Action("Create", "Student")" class="add-button">Add New Student</a>
 
-<table id="studentGrid"></table>
-<div id="pager"></div>
+<div class="container1">
+    <table id="studentGrid"></table>
+    <div id="pager"></div>
+</div>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -51,7 +53,6 @@
                 caption: 'Student Management'
             });
 
-            // Enable pagination with left and right buttons
             $("#studentGrid").navGrid('#pager', {
                 edit: false,
                 add: false,
@@ -60,7 +61,6 @@
                 refresh: true,
             });
 
-            // Change the default text of pagination buttons to "..."
             setTimeout(() => {
                 $(".ui-pg-button .ui-icon-seek-prev").html("<");
                 $(".ui-pg-button .ui-icon-seek-next").html(">");
@@ -78,6 +78,36 @@
     </script>
 
     <style>
+        .container1 {
+            padding: 20px;
+            border: 1px solid black;
+            border-radius: 5px;
+            
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        .add-button {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+            .add-button:hover {
+                background-color: #218838;
+            }
+
         .deleteButton {
             background-color: red;
             color: white;
@@ -102,9 +132,7 @@
                 background-color: #0056b3;
             }
 
-        /* Custom style for pagination with ... */
         .ui-pg-button {
-/*            background-color: #007bff;*/
             color: black;
             border-radius: 5px;
             padding: 6px 12px;
@@ -114,7 +142,8 @@
         }
 
             .ui-pg-button:hover {
-               background-color: #0056b3;
+                background-color: #0056b3;
+                color: white;
             }
     </style>
 }
