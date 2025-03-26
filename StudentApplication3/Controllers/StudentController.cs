@@ -23,7 +23,7 @@ namespace StudentApplication3.Controllers
 
         // POST: Student/Create using AJAX
         [HttpPost]
-        public JsonResult Create(Student student)
+        public ActionResult Create(Student student)
         {
             if (student == null)
             {
@@ -42,7 +42,7 @@ namespace StudentApplication3.Controllers
             {
                 db.Students.Add(student);
                 db.SaveChanges();
-                return Json(new { success = true, message = "Student created successfully!" });
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -73,8 +73,8 @@ namespace StudentApplication3.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var list = db.centers.Select(c => new { c.Id, c.Name }).ToList();
-            ViewBag.list = new SelectList(list, "Id", "Name");
+            var list = db.centers.Select(c => new { c.Id, c.Name }).ToList(); // Use Name for both value and display
+            ViewBag.list = new SelectList(list, "Name", "Name");
 
             var student = db.Students.FirstOrDefault(s => s.Id == id);
             if (student == null)
@@ -86,7 +86,7 @@ namespace StudentApplication3.Controllers
 
 
         [HttpPost]
-        public JsonResult Edit(Student student)
+        public ActionResult Edit(Student student)
         {
             if (student == null)
             {
@@ -111,7 +111,7 @@ namespace StudentApplication3.Controllers
                 existingStudent.CDAC_Center = student.CDAC_Center;
 
                 db.SaveChanges();
-                return Json(new { success = true, message = "Student updated successfully!" });
+                return RedirectToAction("Index");
             }
             else
             {

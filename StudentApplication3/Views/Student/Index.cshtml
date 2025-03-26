@@ -16,12 +16,10 @@
 
     <script>
         $(document).ready(function () {
-           var studentData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.JsonSerializerSettings
-{
-    ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-}));
-
-
+            var studentData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.JsonSerializerSettings
+            {
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            }));
 
             $("#studentGrid").jqGrid({
                 datatype: 'local',
@@ -52,6 +50,23 @@
                 pager: '#pager',
                 caption: 'Student Management'
             });
+
+            // Enable pagination with left and right buttons
+            $("#studentGrid").navGrid('#pager', {
+                edit: false,
+                add: false,
+                del: false,
+                search: false,
+                refresh: true,
+            });
+
+            // Change the default text of pagination buttons to "..."
+            setTimeout(() => {
+                $(".ui-pg-button .ui-icon-seek-prev").html("<");
+                $(".ui-pg-button .ui-icon-seek-next").html(">");
+                $(".ui-pg-button .ui-icon-seek-first").html("<<");
+                $(".ui-pg-button .ui-icon-seek-end").html(">>");
+            }, 500);
         });
 
         function showEdit(studentId) {
@@ -85,6 +100,21 @@
 
             button:hover {
                 background-color: #0056b3;
+            }
+
+        /* Custom style for pagination with ... */
+        .ui-pg-button {
+/*            background-color: #007bff;*/
+            color: black;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+            .ui-pg-button:hover {
+               background-color: #0056b3;
             }
     </style>
 }
