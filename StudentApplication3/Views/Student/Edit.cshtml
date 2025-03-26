@@ -16,18 +16,21 @@
                 @Html.LabelFor(model => model.Name, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <span id="NameError" class="text-danger"></span>
             </div>
 
             <div class="col-md-6">
                 @Html.LabelFor(model => model.Email, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <span id="EmailError" class="text-danger"></span>
             </div>
 
             <div class="col-md-6">
                 @Html.LabelFor(model => model.DOB, new { @class = "form-label" })
                 @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", type = "date", id = "dob" })
                 <span id="dobError" class="text-danger"></span>
+                
             </div>
 
             <div class="col-md-6">
@@ -51,18 +54,21 @@
                     <label class="form-check-label">Other</label>
                 </div>
                 @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                <span id="GenderError" class="text-danger"></span>
             </div>
 
             <div class="col-md-6">
                 @Html.LabelFor(model => model.Hobbies, new { @class = "form-label" })
                 @Html.TextAreaFor(model => model.Hobbies, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
+                <span id="HobbiesError" class="text-danger"></span>
             </div>
 
             <div class="form-group col-sm-6">
                 @Html.LabelFor(model => model.CDAC_Center, "CDAC Center")
                 @Html.DropDownListFor(model => model.CDAC_Center, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
+                <span id="CDAC_CenterError" class="text-danger"></span>
             </div>
         </div>
 
@@ -77,25 +83,79 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 
-    <script>
-        document.getElementById("dob").addEventListener("change", function () {
-            var dobInput = document.getElementById("dob").value;
-            var dob = new Date(dobInput);
-            var today = new Date();
-            var errorMessage = document.getElementById("dobError");
+<script>
+     document.getElementById("studentForm").addEventListener("submit", function (e) {
+    let isValid = true;
 
-            if (dob > today) {
-                errorMessage.textContent = "Date of Birth cannot be greater than today.";
-                document.getElementById("age").value = "";
-            } else {
-                errorMessage.textContent = "";
-                var age = today.getFullYear() - dob.getFullYear();
-                var monthDiff = today.getMonth() - dob.getMonth();
-                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-                    age--;
-                }
-                document.getElementById("age").value = age;
-            }
-        });
-    </script>
+    // Validation Config
+    const fields = [
+        { id: "Name", regex: /^[A-Za-z\s]+$/, errorMessage: "Name should only contain letters and spaces.", requiredMessage: "Name is required." },
+        { id: "Email", regex: /^[^\s]+[^\s]+\.[^\s]+$/, errorMessage: "Invalid email format.", requiredMessage: "Email is required." },
+        { id: "Hobbies", regex: /.+/, errorMessage: "Hobbies are required." }
+    ];
+
+    // Generic Validation
+    fields.forEach(field => {
+        const value = document.getElementById(field.id).value.trim();
+        const errorElement = document.getElementById(field.id + "Error");
+
+        if (value === "") {
+            showError(errorElement, field.requiredMessage);
+            isValid = false;
+        } else if (!field.regex.test(value)) {
+            showError(errorElement, field.errorMessage);
+            isValid = false;
+        } else {
+            clearError(errorElement);
+        }
+    });
+
+    // DOB Validation
+    const dobError = document.getElementById("dobError").textContent;
+    if (dobError !== "") {
+        isValid = false;
+    }
+
+    // Gender Validation
+    const genderChecked = document.querySelector('input[name="Gender"]:checked');
+    const genderError = document.getElementById("GenderError");
+    if (!genderChecked) {
+        showError(genderError, "Please select your gender.");
+        isValid = false;
+    } else {
+        clearError(genderError);
+    }
+
+    // CDAC Center Validation
+    const cdacCenter = document.getElementById("CDAC_Center").value;
+    const cdacCenterError = document.getElementById("CDAC_CenterError");
+    if (!cdacCenter) {
+        showError(cdacCenterError, "Please select a CDAC Center.");
+        isValid = false;
+    } else {
+        clearError(cdacCenterError);
+    }
+
+    if (!isValid) {
+        e.preventDefault();
+    }
+});
+
+function showError(element, message) {
+    if (element) {
+        element.textContent = message;
+    }
+}
+
+function clearError(element) {
+    if (element) {
+        element.textContent = "";
+    }
+}
+
+
+</script>
+
+    
+
 }

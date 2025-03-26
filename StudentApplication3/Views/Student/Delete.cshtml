@@ -22,28 +22,29 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#deleteBtn').click(function () {
-            var studentId = $(this).data('id');
+ $(document).ready(function () {
+    $('#deleteBtn').click(function () {
+        var studentId = $(this).data('id');
 
-            if (confirm('Are you sure you want to delete this student?')) {
-                $.ajax({
-                    url: '@Url.Action("DeleteConfirmed", "Student")',
-                    type: 'POST',
-                    data: { id: studentId },
-                    success: function (response) {
-                        if (response.success) {
-                            alert(response.message);
-                            window.location.href = '@Url.Action("Index", "Student")';
-                        } else {
-                            alert(response.message);
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        alert('Error: ' + xhr.responseText);
+        if (confirm('Are you sure you want to delete this student?')) {
+            $.ajax({
+                url: '@Url.Action("DeleteConfirmed", "Student")',
+                type: 'POST',
+                data: { id: studentId },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        window.location.href = '@Url.Action("Index", "Student")';
+                    } else {
+                        alert(response.message);
                     }
-                });
-            }
-        });
+                },
+                error: function (xhr) {
+                    alert('Error: ' + xhr.responseText);
+                }
+            });
+        }
     });
+});
+
 </script>
