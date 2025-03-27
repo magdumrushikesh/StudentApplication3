@@ -8,76 +8,90 @@
 
 @using (Html.BeginForm("Edit", "Student", FormMethod.Post, new { id = "studentForm" }))
 {
-    <div class="container" style="border: 1px solid black; padding:20px;box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5); border-radius: 5px">
-        <div class="row g-3">
-            @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+<div class="container" style="border: 1px solid black; padding:20px;box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5); border-radius: 5px">
+    <div class="row g-3">
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Name, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                <span id="NameError" class="text-danger"></span>
-            </div>
-
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Email, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                <span id="EmailError" class="text-danger"></span>
-            </div>
-
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.DOB, new { @class = "form-label" })
-                <input class="form-control" type="date" id="dob" name="DOB" value="@ViewBag.FormattedDOB" />
-                <span id="dobError" class="text-danger"></span>
-            </div>
-
-
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Age, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.Age, new { @class = "form-control", type = "number", id = "age", @readonly = "readonly" })
-                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
-            </div>
-
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Gender, new { @class = "form-label" })
-                <div class="form-check form-check-inline">
-                    @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "form-check-input" })
-                    <label class="form-check-label">Male</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "form-check-input" })
-                    <label class="form-check-label">Female</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    @Html.RadioButtonFor(model => model.Gender, "Other", new { @class = "form-check-input" })
-                    <label class="form-check-label">Other</label>
-                </div>
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                <span id="GenderError" class="text-danger"></span>
-            </div>
-
-            <div class="col-md-6">
-                @Html.LabelFor(model => model.Hobbies, new { @class = "form-label" })
-                @Html.TextAreaFor(model => model.Hobbies, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
-                <span id="HobbiesError" class="text-danger"></span>
-            </div>
-
-            <div class="form-group col-sm-6">
-                @Html.LabelFor(model => model.CDAC_Center, "CDAC Center")
-                @Html.DropDownListFor(model => model.CDAC_Center, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
-                <span id="CDAC_CenterError" class="text-danger"></span>
-            </div>
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            <span id="NameError" class="text-danger"></span>
         </div>
 
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Email, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            <span id="EmailError" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.DOB, new { @class = "form-label" })
+            <input class="form-control" type="date" id="dob" name="DOB" value="@ViewBag.FormattedDOB" />
+            <span id="dobError" class="text-danger"></span>
+        </div>
+
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Age, new { @class = "form-label" })
+            @Html.TextBoxFor(model => model.Age, new { @class = "form-control", type = "number", id = "age", @readonly = "readonly" })
+            @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="row g-3">
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Gender, new { @class = "form-label" })
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(model => model.Gender, "Male", new { @class = "form-check-input" })
+                <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(model => model.Gender, "Female", new { @class = "form-check-input" })
+                <label class="form-check-label">Female</label>
+            </div>
+            <div class="form-check form-check-inline">
+                @Html.RadioButtonFor(model => model.Gender, "Other", new { @class = "form-check-input" })
+                <label class="form-check-label">Other</label>
+            </div>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            <span id="GenderError" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.Hobbies, new { @class = "form-label" })
+            @Html.TextAreaFor(model => model.Hobbies, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger" })
+            <span id="HobbiesError" class="text-danger"></span>
+        </div>
+
+    </div>
+    <div class="row g-3">
+
+        <div class="form-group col-sm-6">
+            @Html.LabelFor(model => model.CDAC_Center, "CDAC Center")
+            @Html.DropDownListFor(model => model.CDAC_Center, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
+            <span id="CDAC_CenterError" class="text-danger"></span>
+        </div>
+
+    </div>
 
         <div class="col-12 mt-4">
             <button class="btn btn-primary" type="submit">Confirm Edit</button>
             <a href="@Url.Action("Index")" class="btn btn-secondary">Back to List</a>
         </div>
-    </div>
+
+ 
+
+
+   
+</div>
 }
 
 @section Scripts {
