@@ -28,15 +28,17 @@
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.Name)
+            <span class="text-danger">*</span>
             @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id = "txtName" })
             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             <span id="nameError" class="text-danger"></span>
-
         </div>
+
 
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.Email)
+            <span class="text-danger">*</span>
             @Html.TextBoxFor(model => model.Email, new { @class = "form-control", id = "txtEmail" })
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
@@ -47,12 +49,14 @@
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.DOB)
+            <span class="text-danger">*</span>
             @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", type = "date", id = "dob" })
             <span id="dobError" class="text-danger"></span>
         </div>
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.Age)
+            <span class="text-danger">*</span>
             @Html.TextBoxFor(model => model.Age, new { @class = "form-control", type = "number", id = "age", @readonly = "readonly" })
             @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
         </div>
@@ -62,6 +66,7 @@
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.Gender)
+            <span class="text-danger">*</span>
             <div>
                 <label class="radio-inline">
                     @Html.RadioButtonFor(model => model.Gender, "Male") Male
@@ -78,6 +83,7 @@
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.Hobbies)
+            <span class="text-danger">*</span>
             @Html.TextAreaFor(model => model.Hobbies, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Hobbies, "", new { @class = "text-danger", id = "txtHobbies" })
         </div>
@@ -87,6 +93,7 @@
 
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.CDAC_Center, "CDAC Center")
+            <span class="text-danger">*</span>
             @Html.DropDownListFor(model => model.CDAC_Center, (SelectList)ViewBag.list, "Select your Center", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.CDAC_Center, "", new { @class = "text-danger" })
         </div>
