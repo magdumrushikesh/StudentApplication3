@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Web.Mvc;
 using StudentApplication3.BAL;
 using StudentApplication3.Models;
@@ -37,21 +38,30 @@ namespace StudentApplication3.Controllers
         {
             var student = studentBAL.GetStudentById(id);
             if (student == null) return HttpNotFound();
-            ViewBag.list = new SelectList(studentBAL.GetAllCenters(), "Name", "Name");
-            return View(student);
-        }
 
-        [HttpPost]
-        public ActionResult Edit(Student student)
-        {
-            if (ModelState.IsValid)
+            // Ensure date is in the correct format
+            if (student.DOB != null)
             {
-                studentBAL.UpdateStudent(student);
-                return RedirectToAction("Index");
+                ViewBag.FormattedDOB = student.DOB.Value.ToString("yyyy-MM-dd");
             }
             ViewBag.list = new SelectList(studentBAL.GetAllCenters(), "Name", "Name");
             return View(student);
         }
+
+
+
+        [HttpPost]
+        public ActionResult Edit(Student model)
+        {
+            if (ModelState.IsValid)
+            {
+                studentBAL.UpdateStudent(model);
+                return RedirectToAction("Index");
+            }
+            ViewBag.list = new SelectList(studentBAL.GetAllCenters(), "Name", "Name");
+            return View(model);
+        }
+
 
         public ActionResult Delete(int id)
         {

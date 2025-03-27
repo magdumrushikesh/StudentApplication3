@@ -28,10 +28,10 @@
 
             <div class="col-md-6">
                 @Html.LabelFor(model => model.DOB, new { @class = "form-label" })
-                @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", type = "date", id = "dob" })
+                <input class="form-control" type="date" id="dob" name="DOB" value="@ViewBag.FormattedDOB" />
                 <span id="dobError" class="text-danger"></span>
-                
             </div>
+
 
             <div class="col-md-6">
                 @Html.LabelFor(model => model.Age, new { @class = "form-label" })
