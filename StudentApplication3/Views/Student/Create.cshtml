@@ -30,6 +30,8 @@
                 @Html.LabelFor(model => model.Name)
                 @Html.TextBoxFor(model => model.Name, new { @class = "form-control", id = "txtName" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <span id="nameError" class="text-danger"></span>
+
             </div>
 
             <div class="form-group col-sm-6">
@@ -210,6 +212,33 @@
                 $("#age").val(age);
             }
         });
+
+
+        document.getElementById("txtName").addEventListener("input", function () {
+            const nameInput = this.value;
+            const nameError = document.getElementById("nameError");
+
+            const namePattern = /^[A-Za-z\s]+$/; // Only letters and spaces
+
+            if (nameInput.length < 3) {
+                nameError.textContent = "Name must be at least 3 characters long.";
+            } else if (!namePattern.test(nameInput)) {
+                nameError.textContent = "Name can only contain letters and spaces.";
+            } else {
+                nameError.textContent = "";
+            }
+        });
+
+        document.getElementById("studentForm").addEventListener("submit", function (e) {
+            const nameInput = document.getElementById("txtName").value;
+            const nameError = document.getElementById("nameError");
+
+            if (nameInput.length < 3 || !/^[A-Za-z\s]+$/.test(nameInput)) {
+                e.preventDefault(); // Prevent form submission
+                alert("Please fix the name field errors before submitting.");
+            }
+        });
+
       
     </script>
 

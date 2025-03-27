@@ -41,8 +41,9 @@
                         width: 200,
                         formatter: function (cellvalue, options, rowObject) {
                             return `<button onclick="showEdit('${rowObject.Id}')">Edit</button>
-                                    <button class='deleteButton' onclick="showDelete('${rowObject.Id}')">Delete</button>`;
+            <button class='deleteButton' data-id="${rowObject.Id}">Delete</button>`;
                         }
+
                     }
                 ],
                 viewrecords: true,
@@ -82,7 +83,6 @@
             padding: 20px;
             border: 1px solid black;
             border-radius: 5px;
-            
         }
 
         body {
@@ -145,5 +145,41 @@
                 background-color: #0056b3;
                 color: white;
             }
+
+        .ui-jqgrid .ui-jqgrid-htable th {
+            background-color: #007bff; /* Bootstrap blue */
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
     </style>
+    <script>
+$(document).ready(function () {
+    $('#studentGrid').on('click', '.deleteButton', function () {
+        var studentId = $(this).data('id');
+
+        if (confirm('Are you sure you want to delete this student?')) {
+            $.ajax({
+                url: '@Url.Action("DeleteConfirmed", "Student")',
+                type: 'POST',
+                data: { id: studentId },
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        window.location.href = '@Url.Action("Index", "Student")';
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert('Error: ' + xhr.responseText);
+                }
+            });
+        }
+    });
+});
+
+
+    </script>
 }

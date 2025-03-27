@@ -151,7 +151,32 @@ function clearError(element) {
     if (element) {
         element.textContent = "";
     }
-}
+    }
+
+    //code for calculate age
+
+    document.getElementById("dob").addEventListener("change", function () {
+        var dobInput = document.getElementById("dob").value;
+        var dob = new Date(dobInput);
+        var today = new Date();
+        var errorMessage = document.getElementById("dobError");
+
+        if (dob > today) {
+            errorMessage.textContent = "Date of Birth cannot be greater than today.";
+            document.getElementById("age").value = "";
+        } else {
+            errorMessage.textContent = "";
+            var age = today.getFullYear() - dob.getFullYear();
+            var monthDiff = today.getMonth() - dob.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            document.getElementById("age").value = age;
+        }
+    });
+
+
+
 
 
 </script>
