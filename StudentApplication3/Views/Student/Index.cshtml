@@ -18,20 +18,34 @@
 
     <script>
         $(document).ready(function () {
-            var studentData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model, new Newtonsoft.Json.JsonSerializerSettings
-            {
-                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-            }));
-
             $("#studentGrid").jqGrid({
-                datatype: 'local',
-                data: studentData,
+                url: '@Url.Action("GetStudents", "Student")',
+                datatype: 'json',
+                mtype: 'GET',
                 colNames: ['Name', 'Age', 'Email', 'DOB', 'Gender', 'Hobbies', 'CDAC Center', 'Actions'],
                 colModel: [
                     { name: 'Name', index: 'Name', width: 150 },
                     { name: 'Age', index: 'Age', width: 80, align: 'center' },
                     { name: 'Email', index: 'Email', width: 180 },
-                    { name: 'DOB', index: 'DOB', width: 120, align: 'center' },
+                    {
+                        name: 'DOB',
+                        index: 'DOB',
+                        width: 120,
+                        align: 'center',
+                        formatter: function (cellvalue, options, rowObject) {
+                            if (cellvalue) {
+                                // Convert Microsoft JSON date to JavaScript Date
+                                var date = new Date(parseInt(cellvalue.substr(6)));
+                                // Format the date as dd/MM/yyyy
+                                var day = date.getDate().toString().padStart(2, '0');
+                                var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                var year = date.getFullYear();
+                                return day + '/' + month + '/' + year;
+                            } else {
+                                return ''; // Or return a default value if DOB is null
+                            }
+                        }
+                    },
                     { name: 'Gender', index: 'Gender', width: 80, align: 'center' },
                     { name: 'Hobbies', index: 'Hobbies', width: 200 },
                     { name: 'CDAC_Center', index: 'CDAC_Center', width: 150 },
@@ -55,7 +69,14 @@
                 pager: '#pager',
                 caption: 'Student Management',
                 styleUI: 'Bootstrap4',
-                responsive: true
+                responsive: true,
+                jsonReader: {
+                    root: 'data',
+                    page: 'currentPage',
+                    total: 'totalPages',
+                    records: 'totalRecords',
+                    datefmt: 'm/d/Y' // Add date format (not strictly needed here, but good practice)
+                }
             });
 
             $("#studentGrid").navGrid('#pager', {
@@ -65,13 +86,6 @@
                 search: false,
                 refresh: true
             });
-
-            setTimeout(() => {
-                $(".ui-pg-button .ui-icon-seek-prev").html("<");
-                $(".ui-pg-button .ui-icon-seek-next").html(">");
-                $(".ui-pg-button .ui-icon-seek-first").html("<<");
-                $(".ui-pg-button .ui-icon-seek-end").html(">>");
-            }, 500);
 
             $('#studentGrid').on('click', '.deleteButton', function () {
                 var studentId = $(this).data('id');
@@ -84,7 +98,7 @@
                         success: function (response) {
                             if (response.success) {
                                 alert(response.message);
-                                window.location.href = '@Url.Action("Index", "Student")';
+                                $('#studentGrid').trigger('reloadGrid');
                             } else {
                                 alert(response.message);
                             }
@@ -118,17 +132,13 @@
 
         .ui-jqgrid tr.jqgrow td {
             vertical-align: middle;
-            padding: 8px; /* Add padding to row cells */
+            padding: 8px;
         }
 
         .ui-jqgrid .ui-jqgrid-pager {
             text-align: center;
             padding: 10px 0;
         }
-
-            .ui-jqgrid .ui-jqgrid-pager .ui-pg-button {
-                margin: 0 5px;
-            }
 
         .ui-jqgrid .ui-jqgrid-view {
             border: 1px solid #dee2e6;
