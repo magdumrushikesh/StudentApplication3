@@ -15,9 +15,22 @@ namespace StudentApplication3.DAL
 
         public void AddStudent(Student student)
         {
-            db.Students.Add(student);
-            db.SaveChanges();
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    db.Students.Add(student);
+                    db.SaveChanges();
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback(); 
+                    throw new Exception("Error while adding student: " + ex.Message);
+                }
+            }
         }
+
 
         public void UpdateStudent(Student student)
         {
