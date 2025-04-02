@@ -19,7 +19,7 @@ namespace StudentApplication3.BAL
 
         public bool EmailExists(string email)
         {
-            using (var context = new StudentDBEntities3())
+            using (var context = new StudentDBEntities4())
             {
                 string trimmedEmail = email.Trim().ToLower();
                 return context.Students.Any(s => s.Email.Trim().ToLower() == trimmedEmail);

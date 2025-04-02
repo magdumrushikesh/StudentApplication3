@@ -13,10 +13,10 @@ namespace StudentApplication3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class StudentDBEntities3 : DbContext
+    public partial class StudentDBEntities4 : DbContext
     {
-        public StudentDBEntities3()
-            : base("name=StudentDBEntities3")
+        public StudentDBEntities4()
+            : base("name=StudentDBEntities4")
         {
         }
     

@@ -25,6 +25,7 @@
           <Property Name="Hobbies" Type="nvarchar" MaxLength="255" />
           <Property Name="CDAC_Center" Type="nvarchar" MaxLength="100" />
           <Property Name="center_id" Type="int" />
+          <Property Name="Image_Url" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_Student_Center">
           <End Role="center" Type="Self.center" Multiplicity="0..1" />
@@ -72,6 +73,7 @@
           <Property Name="Hobbies" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="CDAC_Center" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="center_id" Type="Int32" />
+          <Property Name="Image_Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="center" Relationship="Self.FK_Student_Center" FromRole="Student" ToRole="center" />
         </EntityType>
         <Association Name="FK_Student_Center">
@@ -86,7 +88,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="StudentDBEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="StudentDBEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="centers" EntityType="Self.center" />
           <EntitySet Name="Students" EntityType="Self.Student" />
           <AssociationSet Name="FK_Student_Center" Association="Self.FK_Student_Center">
@@ -99,7 +101,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="StudentDBModelStoreContainer" CdmEntityContainer="StudentDBEntities3">
+        <EntityContainerMapping StorageEntityContainer="StudentDBModelStoreContainer" CdmEntityContainer="StudentDBEntities4">
           <EntitySetMapping Name="centers">
             <EntityTypeMapping TypeName="StudentDBModel.center">
               <MappingFragment StoreEntitySet="center">
@@ -120,6 +122,7 @@
                 <ScalarProperty Name="Hobbies" ColumnName="Hobbies" />
                 <ScalarProperty Name="CDAC_Center" ColumnName="CDAC_Center" />
                 <ScalarProperty Name="center_id" ColumnName="center_id" />
+                <ScalarProperty Name="Image_Url" ColumnName="Image_Url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

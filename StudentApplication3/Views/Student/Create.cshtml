@@ -4,20 +4,6 @@
     ViewBag.Title = "Create Student";
 }
 
-@*<script>
-
-    function validate() {
-        if (document.getElementById("txtName").value.length < 3) {
-            alert("Name should be greater than 3 character");
-            return false;
-        }
-        return true;
-    }
-</script>*@
-
-
-
-
 <h2>Create Student</h2>
 
 @using (Html.BeginForm("Create", "Student", FormMethod.Post, new { id = "studentForm" }))
@@ -50,7 +36,14 @@
         <div class="form-group col-sm-6">
             @Html.LabelFor(model => model.DOB)
             <span class="text-danger">*</span>
-            @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", type = "date", id = "dob" })
+            @Html.TextBoxFor(model => model.DOB, new
+            {
+                @class = "form-control",
+                type = "date",
+                id = "dob",
+                max = DateTime.Today.ToString("yyyy-MM-dd"),
+                min = DateTime.Today.AddYears(-125).ToString("yyyy-MM-dd")
+            })
             <span id="dobError" class="text-danger"></span>
         </div>
 
@@ -258,6 +251,7 @@
                 alert("Please fix the name field errors before submitting.");
             }
         });
+
 
       
     </script>
