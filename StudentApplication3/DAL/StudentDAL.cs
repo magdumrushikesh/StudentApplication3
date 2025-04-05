@@ -7,11 +7,13 @@ namespace StudentApplication3.DAL
 {
     public class StudentDAL
     {
-        private StudentDBEntities4 db = new StudentDBEntities4();
+        private StudentDBEntities7 db = new StudentDBEntities7();
 
         public List<Student> GetAllStudents() => db.Students.ToList();
         public Student GetStudentById(int id) => db.Students.FirstOrDefault(s => s.Id == id);
         public List<center> GetAllCenters() => db.centers.ToList();
+
+       
 
         public void AddStudent(Student student)
         {
