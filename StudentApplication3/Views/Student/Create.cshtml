@@ -8,7 +8,8 @@
 
 @using (Html.BeginForm("Create", "Student", FormMethod.Post, new { id = "studentForm" }))
 {
-<div class="container" style="border: 1px solid black; padding: 20px; box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5); border-radius: 5px">
+<div class="container" style="border: 1px solid #ccc; padding: 20px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); border-radius: 8px; background-color: #fff;">
+
     <div class="row">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
